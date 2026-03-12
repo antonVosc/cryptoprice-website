@@ -6,6 +6,7 @@ The application allows users to browse different cryptocurrencies and view their
 
 # Features:
 	•	**Cryptocurrency List**: Browse through a list of popular cryptocurrencies.
+	
 	•	**Realtime Price Data**: View up-to-date price information fetched from a crypto API.
 	•	**Price Charts**: See clean and interactive charts showing price movements over time.
 	•	**Coin Details**: View more detailed information about individual cryptocurrencies.
