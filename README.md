@@ -1,35 +1,16 @@
-# cryptoprice-website
+# React + Vite
 
-This is a crypto price tracking website developed with ReactJS to learn more about data fetching, API integration and dynamic UI updates.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-The application allows users to browse different cryptocurrencies and view their real-time price data and interactive charts.
+Currently, two official plugins are available:
 
-# Features:
-- **Cryptocurrency List**: Browse through a list of popular cryptocurrencies.
-- **Realtime Price Data**: View up-to-date price information fetched from a crypto API.
-- **Price Charts**: See clean and interactive charts showing price movements over time.
-- **Coin Details**: View more detailed information about individual cryptocurrencies.
-- **Responsive UI**: Simple and user-friendly interface designed for easy navigation.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-# Installation:
+## React Compiler
 
-1. 
-```
-git clone https://github.com/antonVosc/cryptoprice-website.git
-```
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-2. 
-```
-cd cryptoprice-website/
-```
+## Expanding the ESLint configuration
 
-3. 
-```
-npm install
-```
-
-# Usage:
-
-```
-npm run dev
-```
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
