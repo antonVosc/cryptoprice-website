@@ -81,6 +81,7 @@ body {
 .crypto-stats,
 .stat,
 .loading,
+.loading-warning,
 .coin-header,
 .coin-title,
 .price-range,
@@ -101,6 +102,7 @@ body {
 .filter-group,
 .crypto-info,
 .loading,
+.loading-warning,
 .coin-header,
 .coin-title {
   align-items: center;
@@ -236,6 +238,7 @@ body {
 .crypto-info,
 .crypto-stats,
 .loading,
+.loading-warning,
 .coin-header {
   gap: 1rem;
 }
@@ -245,6 +248,7 @@ body {
 .crypto-info h3,
 .stat-value,
 .loading,
+.loading-warning,
 .no-results,
 .back-button,
 .coin-title h1,
@@ -454,6 +458,7 @@ body {
 
 .crypto-price .change,
 .loading p,
+.loading-warning p,
 .change-badge {
   font-size: 1.1rem;
 }
@@ -488,6 +493,7 @@ body {
 
 .stat,
 .loading,
+.loading-warning,
 .price-range,
 .stat-card {
   flex-direction: column;
@@ -497,11 +503,13 @@ body {
   gap: 0.25rem;
 }
 
-.loading {
+.loading,
+.loading-warning {
   justify-content: center;
 }
 
 .loading,
+.loading-warning,
 .no-results {
   padding: 4rem 2rem;
 }
@@ -522,6 +530,7 @@ body {
 }
 
 .loading p,
+.loading-warning p,
 .footer p {
   font-weight: 500;
 }
@@ -529,6 +538,10 @@ body {
 .no-results,
 .footer {
   text-align: center;
+}
+
+.warning-icon {
+  font-size: 5rem;
 }
 
 .no-results,
