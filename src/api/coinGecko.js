@@ -11,3 +11,15 @@ export const fetchCryptos = async () => {
 
   return response.json();
 };
+
+export const fetchCoinData = async (id) => {
+  const response = await fetch(
+    `${BASE_URL}/coins/${id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch coin data");
+  }
+
+  return response.json();
+};

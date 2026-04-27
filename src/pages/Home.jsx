@@ -35,8 +35,6 @@ export const Home = () => {
       console.error("Error fetching crypto: ", err);
     } finally {
       setIsLoading(false);
-      clearTimeout(slowLoadTimerRef.current);
-      setIsSlowLoad(false);
     }
   };
 
