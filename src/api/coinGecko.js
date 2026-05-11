@@ -23,3 +23,16 @@ export const fetchCoinData = async (id) => {
 
   return response.json();
 };
+
+
+export const fetchChartData = async (id, days = 7) => {
+  const response = await fetch(
+    `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`
+  );
+  
+  if (!response.ok) {
+    throw new Error("Failed to fetch chart data");
+  }
+
+  return response.json();
+};

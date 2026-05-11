@@ -17,9 +17,12 @@ export const Home = () => {
       setIsSlowLoad(true);
     }, 5000);
 
-    fetchCryptoData();
+    const interval = setInterval(fetchCryptoData, 30000);
 
-    return () => clearTimeout(slowLoadTimerRef.current);
+    return () => {
+      clearTimeout(slowLoadTimerRef.current);
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {
@@ -141,6 +144,10 @@ export const Home = () => {
           ))}
         </div>
       )}
+
+      <footer className="footer">
+        <p>Data provided by CoinGecko API · Updated every 30 seconds</p>
+      </footer>
     </div>
   );
 };
