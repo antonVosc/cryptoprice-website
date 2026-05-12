@@ -287,7 +287,9 @@ body {
 .filter-group select,
 .view-toggle button,
 .crypto-card,
-.back-button {
+.back-button,
+.logo-section,
+.back-to-top {
   cursor: pointer;
 }
 
@@ -406,7 +408,8 @@ body {
 
 .crypto-info img,
 .spinner,
-.coin-title img {
+.coin-title img,
+.back-to-top {
   border-radius: 50%;
 }
 
@@ -545,7 +548,8 @@ body {
 }
 
 .no-results,
-.range-value {
+.range-value,
+.back-to-top {
   font-size: 1.2rem;
 }
 
@@ -686,4 +690,13 @@ body {
   .coin-title h1 {
     font-size: 1.5rem;
   }
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  border: none;
 }

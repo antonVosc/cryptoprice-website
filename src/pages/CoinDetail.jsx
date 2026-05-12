@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchCoinData, fetchChartData } from "../api/coinGecko";
 import { useEffect, useState } from "react";
 import { formatMarketCap, formatPrice } from "../utils/formatter";
@@ -102,7 +102,7 @@ export const CoinDetail = () => {
     <div className="app">
       <header className="header">
         <div className="header-content">
-          <div className="logo-section">
+          <div className="logo-section" onClick={() => navigate("/")}>
             <h1>🚀 Crypto Tracker</h1>
             <p>Real-time cryptocurrency prices and market data</p>
           </div>

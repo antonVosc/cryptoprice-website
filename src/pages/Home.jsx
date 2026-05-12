@@ -10,7 +10,15 @@ export const Home = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [sortBy, setSortBy] = useState("market_cap_rank");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const slowLoadTimerRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => setShowBackToTop(window.scrollY > 300);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  })
 
   useEffect(() => {
     slowLoadTimerRef.current = setTimeout(() => {
@@ -148,6 +156,12 @@ export const Home = () => {
       <footer className="footer">
         <p>Data provided by CoinGecko API · Updated every 30 seconds</p>
       </footer>
+
+      { showBackToTop && (
+        <button className="back-to-top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          ⬆
+        </button>
+      ) }
     </div>
   );
 };
