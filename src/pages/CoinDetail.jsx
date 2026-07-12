@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchCoinData, fetchChartData } from "../api/coinGecko";
 import { useEffect, useState } from "react";
 import { formatMarketCap, formatPrice } from "../utils/formatter";
+import { useCurrency } from "../context/CurrencyContext";
 import {
   CartesianGrid,
   Line,
@@ -15,12 +16,14 @@ import {
 export const CoinDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { currency } = useCurrency();
   const [coin, setCoin] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadAll = async () => {
+      setIsLoading(true);
       try {
         await Promise.all([loadCoinData(), loadChartData()]);
       } finally {
@@ -29,12 +32,11 @@ export const CoinDetail = () => {
     };
 
     loadAll();
-  }, [id]);
+  }, [id, currency]);
 
   const loadCoinData = async () => {
     try {
       const data = await fetchCoinData(id);
-
       setCoin(data);
     } catch (err) {
       console.error("Error fetching crypto: ", err);
@@ -43,27 +45,28 @@ export const CoinDetail = () => {
 
   const loadChartData = async () => {
     try {
-      const data = await fetchChartData(id, 7);
+      const data = await fetchChartData(id, currency, 7);
       const seen = new Set();
 
       const formattedData = data.prices
-        .map((price) => ({
-          time: new Date(price[0]).toLocaleDateString("en-US", {
+        .reduce((acc, price) => {
+          const time = new Date(price[0]).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
-          }),
-          price: price[1].toFixed(2),
-        }))
-        .filter(({ time }) => {
-          if (seen.has(time)) {
-            return false;
+          });
+
+          const existingIndex = acc.findIndex((d) => d.time === time);
+          const point = { time, price: price[1] };
+
+          if (existingIndex >= 0) {
+            acc[existingIndex] = point;
+          } else {
+            acc.push(point);
           }
 
-          seen.add(time);
-
-          return true;
-        })
-        .slice(0, 7);
+          return acc;
+        }, [])
+        .slice(-7);
 
       setChartData(formattedData);
     } catch (err) {
@@ -76,7 +79,6 @@ export const CoinDetail = () => {
       <div className="app">
         <div className="loading">
           <div className="spinner"></div>
-
           <p>Loading coin data...</p>
         </div>
       </div>
@@ -106,7 +108,6 @@ export const CoinDetail = () => {
             <h1>🚀 Crypto Tracker</h1>
             <p>Real-time cryptocurrency prices and market data</p>
           </div>
-
           <button onClick={() => navigate("/")} className="back-button">
             ← Back to List
           </button>
@@ -117,20 +118,22 @@ export const CoinDetail = () => {
         <div className="coin-header">
           <div className="coin-title">
             <img src={coin.image.large} alt={coin.name} />
-
             <div>
               <h1>{coin.name}</h1>
-
               <p className="symbol">{coin.symbol.toUpperCase()}</p>
             </div>
           </div>
-
           <span className="rank">Rank #{coin.market_data.market_cap_rank}</span>
         </div>
 
         <div className="coin-price-section">
           <div className="current-price">
-            <h2>{formatPrice(coin.market_data.current_price.usd)}</h2>
+            <h2>
+              {formatPrice(
+                coin.market_data.current_price?.[currency],
+                currency,
+              )}
+            </h2>
             <span
               className={`change-badge ${isPositive ? "positive" : isNegative ? "negative" : ""}`}
             >
@@ -143,14 +146,14 @@ export const CoinDetail = () => {
             <div className="price-range">
               <span className="range-label">24h High</span>
               <span className="range-value">
-                {formatPrice(coin.market_data.high_24h.usd)}
+                {formatPrice(coin.market_data.high_24h?.[currency], currency)}
               </span>
             </div>
 
             <div className="price-range">
               <span className="range-label">24h Low</span>
               <span className="range-value">
-                {formatPrice(coin.market_data.low_24h.usd)}
+                {formatPrice(coin.market_data.low_24h?.[currency], currency)}
               </span>
             </div>
           </div>
@@ -175,8 +178,8 @@ export const CoinDetail = () => {
                 style={{ fontSize: "12px" }}
                 domain={["auto", "auto"]}
               />
-
               <Tooltip
+                formatter={(value) => [formatPrice(value, currency), "Price"]}
                 contentStyle={{
                   backgroundColor: "rgba(20, 20, 40, 0.95)",
                   border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -184,7 +187,6 @@ export const CoinDetail = () => {
                   color: "#e0e0e0",
                 }}
               />
-
               <Line
                 type="monotone"
                 dataKey="price"
@@ -199,40 +201,48 @@ export const CoinDetail = () => {
         <div className="stats-grid">
           <div className="stat-card">
             <span className="stat-label">Market Cap</span>
-            
             <span className="stat-value">
-              ${formatMarketCap(coin.market_data.market_cap.usd)}
+              {formatMarketCap(
+                coin.market_data.market_cap?.[currency],
+                currency,
+              )}
             </span>
           </div>
 
           <div className="stat-card">
             <span className="stat-label">Volume (24H)</span>
-            
             <span className="stat-value">
-              ${formatMarketCap(coin.market_data.total_volume.usd)}
+              {formatMarketCap(
+                coin.market_data.total_volume?.[currency],
+                currency,
+              )}
             </span>
           </div>
 
           <div className="stat-card">
             <span className="stat-label">Circulating Supply</span>
-            
             <span className="stat-value">
-              {coin.market_data.circulating_supply?.toLocaleString() || "N/A"}
+              {formatMarketCap(
+                coin.market_data.circulating_supply * coin.market_data.current_price?.[currency],
+                currency,
+              )}
             </span>
           </div>
 
           <div className="stat-card">
             <span className="stat-label">Total Supply</span>
-            
             <span className="stat-value">
-              {coin.market_data.total_supply?.toLocaleString() || "N/A"}
+              {formatMarketCap(
+                coin.market_data.total_supply * coin.market_data.current_price?.[currency],
+                currency,
+              )}
             </span>
           </div>
         </div>
       </div>
 
       <footer className="footer">
-        <p>Data provided by CoinGecko API · Updated every 30 seconds</p>
+        <p>Data provided by CoinGecko API · Updates every 30 seconds</p>
       </footer>
     </div>
   );
