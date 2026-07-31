@@ -10,7 +10,7 @@ export const formatPrice = (price, currency = "usd") => {
 
   const symbol = getSymbol(currency);
 
-  if (price < 0.01) {
+  if (price < 1) {
     return `${symbol}${parseFloat(price.toPrecision(4))}`;
   }
 
