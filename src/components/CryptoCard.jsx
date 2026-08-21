@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 import { formatPrice, formatMarketCap } from "../utils/formatter";
+import { getCoinCategories } from "../data/coinCategories";
+import { CategoryBadge } from "./CategoryBadge";
 
 export const CryptoCard = ({ crypto, currency }) => {
   const change = parseFloat(
@@ -20,22 +22,35 @@ export const CryptoCard = ({ crypto, currency }) => {
           </div>
         </div>
 
+        <div className="badge-row">
+          {getCoinCategories(crypto.id).map((cat) => (
+            <CategoryBadge key={cat} category={cat} />
+          ))}
+        </div>
+
         <div className="crypto-price">
           <p className="price">{formatPrice(crypto.current_price, currency)}</p>
-          <p className={`change ${change > 0 ? "positive" : change < 0 ? "negative" : ""}`}>
-            {change > 0 ? "↑" : change < 0 ? "↓" : null} {Math.abs(change).toFixed(2)}%
+          <p
+            className={`change ${change > 0 ? "positive" : change < 0 ? "negative" : ""}`}
+          >
+            {change > 0 ? "↑" : change < 0 ? "↓" : null}{" "}
+            {Math.abs(change).toFixed(2)}%
           </p>
         </div>
 
         <div className="crypto-stats">
           <div className="stat">
             <span className="stat-label">Market Cap</span>
-            <span className="stat-value">{formatMarketCap(crypto.market_cap, currency)}</span>
+            <span className="stat-value">
+              {formatMarketCap(crypto.market_cap, currency)}
+            </span>
           </div>
 
           <div className="stat">
             <span className="stat-label">Volume</span>
-            <span className="stat-value">{formatMarketCap(crypto.total_volume, currency)}</span>
+            <span className="stat-value">
+              {formatMarketCap(crypto.total_volume, currency)}
+            </span>
           </div>
         </div>
       </div>

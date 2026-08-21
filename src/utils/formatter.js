@@ -5,24 +5,24 @@ const NO_DECIMAL_CURRENCIES = new Set(["jpy"]);
 const getSymbol = (currency) =>
   CURRENCIES.find((c) => c.code === currency)?.symbol || "$";
 
-export const formatPrice = (price, currency = "usd") => {
-  if (price == null || isNaN(price)) return "N/A";
+export const formatPrice = (price, currency) => {
+  if (price == null) return "—";
 
-  const symbol = getSymbol(currency);
-
-  if (price < 1) {
-    return `${symbol}${parseFloat(price.toPrecision(4))}`;
+  if (price > 0 && price < 0.01) {
+    const decimals = Math.max(2, -Math.floor(Math.log10(price)) + 2);
+    
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency,
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(price);
   }
 
-  const isZeroDecimal = NO_DECIMAL_CURRENCIES.has(currency);
-
-  const formatted = new Intl.NumberFormat("en-US", {
-    style: "decimal",
-    minimumFractionDigits: isZeroDecimal ? 0 : 2,
-    maximumFractionDigits: isZeroDecimal ? 0 : 2,
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
   }).format(price);
-
-  return `${symbol}${formatted}`;
 };
 
 export const formatMarketCap = (marketCap, currency = "usd") => {

@@ -17,6 +17,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { getCoinCategories } from "../data/coinCategories";
+import { CategoryBadge } from "../components/CategoryBadge";
 
 const styles = {
   chartEmpty: {
@@ -142,7 +144,9 @@ export const CoinDetail = () => {
   const maxAvailableDays = earliestDate
     ? Math.max(
         1,
-        Math.round((Date.now() - new Date(earliestDate).getTime()) / MS_PER_DAY),
+        Math.round(
+          (Date.now() - new Date(earliestDate).getTime()) / MS_PER_DAY,
+        ),
       )
     : null;
 
@@ -314,6 +318,13 @@ export const CoinDetail = () => {
               <p className="symbol">{coin.symbol.toUpperCase()}</p>
             </div>
           </div>
+
+          <div className="badge-row" style={{ marginTop: 8 }}>
+            {getCoinCategories(coin.id).map((cat) => (
+              <CategoryBadge key={cat} category={cat} />
+            ))}
+          </div>
+
           <span className="rank">Rank #{coin.market_data.market_cap_rank}</span>
         </div>
 
