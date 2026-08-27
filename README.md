@@ -13,11 +13,11 @@ The application allows users to browse different cryptocurrencies and view their
 - 🔍 **Coin Details**: View more detailed information about individual cryptocurrencies.
 - 📱 **Responsive UI**: Simple and user-friendly interface designed for easy navigation.
 
-### 🗓 New Cryptocurrencies (will update when development is completed)
+### 🗓 20 New Cryptocurrencies (from newest)
 
-| Coin | Price | Change | Trend |
-|------|------|--------|--------|
-| Name | $0.00 | +0% | 📈/📉 |
+Num | Coin | Price | Change | Trend 24h High | 24h Low | Market Cap | Volume | Rank num in API on day |
+|------|------|--------|--------|--------|--------|--------|--------|--------|
+1 | Name | $0.00 | +0% | 📈/📉 | 21 |
 
 # Installation:
 
