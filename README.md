@@ -15,9 +15,11 @@ The application allows users to browse different cryptocurrencies and view their
 
 ### 🗓 20 New Cryptocurrencies (from newest)
 
-Num | Coin | Price | Change | Trend 24h High | 24h Low | Market Cap | Volume | Rank num in API on day |
-|------|------|--------|--------|--------|--------|--------|--------|--------|
-1 | Name | $0.00 | +0% | 📈/📉 | 21 |
+Num | Coin | Price | Change | Category | Trend 24h High | 24h Low | Market Cap | Volume | Rank num in API on day | Last Checked (GMT) |
+|------|------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+1 | up | $0.29 | +1.75% 📈 | long-tail/emerging/microcap/experimental | $0.38 | $0.26 | 187 | 16:16
+1 | up | $0.29 | +1.75% 📈 | long-tail/emerging/microcap/experimental | $0.38 | $0.26 | 187 | 16:16
+📉
 
 # Installation:
 
